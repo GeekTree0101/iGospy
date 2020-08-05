@@ -3,11 +3,11 @@ package server
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os/exec"
 	"runtime"
 	"text/template"
 
+	"github.com/GeekTree0101/iSpygo/api"
 	"github.com/GeekTree0101/iSpygo/util"
 	"github.com/labstack/echo/v4"
 )
@@ -41,9 +41,10 @@ func (s *Server) Mount() {
 // Route is server route configuration
 func (s *Server) Route() {
 
-	s.serv.GET("/", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "index.html", nil)
-	})
+	makeAPI := api.NewMake()
+
+	s.serv.GET("/", makeAPI.GetIndexPage)
+	s.serv.POST("/make", makeAPI.PostMake)
 }
 
 // Run is execute server
