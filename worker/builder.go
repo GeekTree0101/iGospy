@@ -29,7 +29,7 @@ func NewBuilder(nodes []model.Node) Builder {
 }
 
 // GetPresenter return presenter spy object
-func GetPresenter() (string, error) {
+func (b *Builder) GetPresenter() (string, error) {
 
 	return "", &BuilderError{
 		desc: "unknown error",
@@ -37,7 +37,7 @@ func GetPresenter() (string, error) {
 }
 
 // GetDisplayer return displayer spy object
-func GetDisplayer() (string, error) {
+func (b *Builder) GetDisplayer() (string, error) {
 
 	return "", &BuilderError{
 		desc: "unknown error",
