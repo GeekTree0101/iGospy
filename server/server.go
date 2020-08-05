@@ -29,9 +29,13 @@ func NewServer(port string) Server {
 // Mount is configurate some modules for server
 func (s *Server) Mount() {
 	renderer := &util.Template{
-		Templates: template.Must(template.ParseGlob("static/public/*.html")),
+		Templates: template.Must(template.ParseGlob("app/public/*.html")),
 	}
 	s.serv.Renderer = renderer
+
+	s.serv.File("/global.css", "app/public/global.css")
+	s.serv.File("/build/bundle.css", "app/public/build/bundle.css")
+	s.serv.File("/build/bundle.js", "app/public/build/bundle.js")
 }
 
 // Route is server route configuration
