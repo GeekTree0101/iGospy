@@ -50,17 +50,15 @@ func (s *Server) Route() {
 // Run is execute server
 func (s *Server) Run() {
 
-	s.serv.Logger.Fatal(s.serv.Start(":" + s.port))
-
 	var err error
 
 	switch runtime.GOOS {
 	case "linux":
-		err = exec.Command("xdg-open", "https://localhost:"+s.port).Start()
+		err = exec.Command("xdg-open", "http://localhost:"+s.port).Start()
 	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", "https://localhost:"+s.port).Start()
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", "http://localhost:"+s.port).Start()
 	case "darwin":
-		err = exec.Command("open", "https://localhost:"+s.port).Start()
+		err = exec.Command("open", "http://localhost:"+s.port).Start()
 	default:
 		err = fmt.Errorf("unsupported platform")
 	}
@@ -68,4 +66,6 @@ func (s *Server) Run() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	s.serv.Logger.Fatal(s.serv.Start(":" + s.port))
 }
