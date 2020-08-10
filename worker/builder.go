@@ -18,13 +18,13 @@ func (be *BuilderError) Error() string {
 
 // Builder is spy object generator
 type Builder struct {
-	nodes []model.Node
+	node model.Node
 }
 
 // NewBuilder is builder constructor
-func NewBuilder(nodes []model.Node) Builder {
+func NewBuilder(node model.Node) Builder {
 	return Builder{
-		nodes: nodes,
+		node: node,
 	}
 }
 
