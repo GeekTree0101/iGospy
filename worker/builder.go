@@ -30,6 +30,11 @@ func NewBuilder(node model.Node) Builder {
 
 // GetPresenter return presenter spy object
 func (b *Builder) GetPresenter() (string, error) {
+	if b.node.Type != model.Title {
+		return "", &BuilderError{
+			desc: "invalid structure",
+		}
+	}
 
 	return "", &BuilderError{
 		desc: "unknown error",
@@ -38,8 +43,20 @@ func (b *Builder) GetPresenter() (string, error) {
 
 // GetDisplayer return displayer spy object
 func (b *Builder) GetDisplayer() (string, error) {
+	if b.node.Type != model.Title {
+		return "", &BuilderError{
+			desc: "invalid structure",
+		}
+	}
 
 	return "", &BuilderError{
 		desc: "unknown error",
 	}
 }
+
+/**
+node
+- [node, node]
+  - [node, node, node], [node, node, node]
+
+*/
