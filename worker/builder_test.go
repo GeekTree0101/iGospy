@@ -23,6 +23,7 @@ func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	  self.presentNextCalled += 1
 	  self.presentNextRes = res
 	}
+	
 	`
 
 	node := model.Node{
@@ -86,21 +87,22 @@ func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	}
 
 	if out != expectedOutput {
-		t.Errorf("unexpected output %s, %s", out, expectedOutput)
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
 	}
 }
 
 func Test_Build_Displayer_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var displayReloadViewModel: Feed.Reload.ViewModel?
-	func displayReload(viewModel: Feed.Reload.ViewModel) {
-	  self.displayReloadViewModel = viewModel
-	}
+  func displayReload(viewModel: Feed.Reload.ViewModel) {
+    self.displayReloadViewModel = viewModel
+  }
+  
+  var displayNextViewModel: Feed.Next.ViewModel?
+  func displayNext(viewModel: Feed.Next.ViewModel) {
+    self.displayNextViewModel = viewModel
+  }
 
-	var displayNextViewModel: Feed.Next.ViewModel?
-	func displayNext(viewModel: Feed.Next.ViewModel) {
-	  self.displayNextViewModel = viewModel
-	}
 	`
 
 	node := model.Node{
@@ -164,6 +166,6 @@ func Test_Build_Displayer_Spy_Object(t *testing.T) {
 	}
 
 	if out != expectedOutput {
-		t.Errorf("unexpected output %s, %s", out, expectedOutput)
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
 	}
 }
