@@ -3,9 +3,9 @@ package worker_test
 import (
 	"testing"
 
-	"github.com/GeekTree0101/iSpygo/model"
+	"github.com/GeekTree0101/iGospy/model"
 
-	"github.com/GeekTree0101/iSpygo/worker"
+	"github.com/GeekTree0101/iGospy/worker"
 )
 
 func Test_Processing_Valid_And_Simple_Usecase(t *testing.T) {

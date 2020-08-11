@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/GeekTree0101/iSpygo/model"
+	"github.com/GeekTree0101/iGospy/model"
 )
 
 // ParserError is error for parser

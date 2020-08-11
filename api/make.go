@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
-	"github.com/GeekTree0101/iSpygo/model"
+	"github.com/GeekTree0101/iGospy/model"
 
-	"github.com/GeekTree0101/iSpygo/worker"
+	"github.com/GeekTree0101/iGospy/worker"
 
 	"github.com/labstack/echo/v4"
 )

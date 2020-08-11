@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"text/template"
 
-	"github.com/GeekTree0101/iSpygo/api"
-	"github.com/GeekTree0101/iSpygo/util"
+	"github.com/GeekTree0101/iGospy/api"
+	"github.com/GeekTree0101/iGospy/util"
 	"github.com/labstack/echo/v4"
 )
 

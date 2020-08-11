@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/GeekTree0101/iSpygo/model"
+	"github.com/GeekTree0101/iGospy/model"
 )
 
 // ObjectType is CleanSwift object component type

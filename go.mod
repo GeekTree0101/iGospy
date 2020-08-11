@@ -1,4 +1,4 @@
-module github.com/GeekTree0101/iSpygo
+module github.com/GeekTree0101/iGospy
 
 go 1.13
 

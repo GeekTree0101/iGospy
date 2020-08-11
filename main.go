@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/GeekTree0101/iSpygo/cmd"
+	"github.com/GeekTree0101/iGospy/cmd"
 )
 
 func main() {
