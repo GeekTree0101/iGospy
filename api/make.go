@@ -29,13 +29,13 @@ func (m *Make) GetIndexPage(c echo.Context) error {
 func (m *Make) PostMake(c echo.Context) error {
 	usecase := c.FormValue("usecase")
 	parser := worker.NewParser()
-	nodes, err := parser.Processing(usecase)
+	node, err := parser.Processing(usecase)
 
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	builder := worker.NewBuilder(nodes)
+	builder := worker.NewBuilder(node)
 
 	presenter, err := builder.GetPresenter()
 

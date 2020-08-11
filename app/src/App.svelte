@@ -1,39 +1,46 @@
 <script>
 	let usecase = `
-enum WriteForm {
+enum Feed {
 
-  enum Post {
+  enum Reload {
 
-    struct Req {
-		var isOn: Bool
+	enum Req {
+
+	}
+
+	enum Res {
+
+		var cards: [Card]
+		var error: Error?
+	}
+
+	enum ViewModel {
+
+		var error: Error?
+	}
+  }
+
+  enum Next {
+
+	enum Req {
+
 	}
 
 	struct Res {
+
+		var cards: [Card]
 		var error: Error?
 	}
 
 	struct ViewModel {
-		var result: Int
-	}
-  }
 
-  enum Edit {
-
-	struct Request {
-		var isOn: Bool
-	}
-
-	struct Response {
+		var changeSet: [Change<CardViewModel>]
 		var error: Error?
 	}
-
-	struct ViewModel {
-		var result: Int
-	}
   }
-
 }
-	`;
+`;
+
 	let displayPresenter = "Ready to make presenter";
 	let displayDisplayer = "Ready to make displayer";
 
@@ -53,7 +60,7 @@ enum WriteForm {
 </script>
 
 <main>
-	<h1>iSpygo</h1>
+	<h1>iGospy!</h1>
 	<div class="field-container">
 		<div class="field-container">
 			<h2>Input: Usecase Content</h2>
