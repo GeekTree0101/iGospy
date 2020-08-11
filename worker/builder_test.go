@@ -11,20 +11,20 @@ import (
 func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var presentReloadCalled: Int = 0
-	var presentReloadRes: Feed.Reload.Res?
-	func presentReload(res: Feed.Reload.Res) {
-	  self.presentReloadCalled += 1
-	  self.presentReloadRes = res
-	}
+var presentReloadRes: Feed.Reload.Res?
+func presentReload(res: Feed.Reload.Res) {
+  self.presentReloadCalled += 1
+  self.presentReloadRes = res
+}
 
-	var presentNextCalled: Int = 0
-	var presentNextRes: Feed.Next.Res?
-	func presentNext(res: Feed.Next.Res) {
-	  self.presentNextCalled += 1
-	  self.presentNextRes = res
-	}
-	
-	`
+var presentNextCalled: Int = 0
+var presentNextRes: Feed.Next.Res?
+func presentNext(res: Feed.Next.Res) {
+  self.presentNextCalled += 1
+  self.presentNextRes = res
+}
+
+`
 
 	node := model.Node{
 		Type: model.Title,
@@ -94,16 +94,16 @@ func Test_Build_Presenter_Spy_Object(t *testing.T) {
 func Test_Build_Displayer_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var displayReloadViewModel: Feed.Reload.ViewModel?
-  func displayReload(viewModel: Feed.Reload.ViewModel) {
-    self.displayReloadViewModel = viewModel
-  }
-  
-  var displayNextViewModel: Feed.Next.ViewModel?
-  func displayNext(viewModel: Feed.Next.ViewModel) {
-    self.displayNextViewModel = viewModel
-  }
+func displayReload(viewModel: Feed.Reload.ViewModel) {
+  self.displayReloadViewModel = viewModel
+}
 
-	`
+var displayNextViewModel: Feed.Next.ViewModel?
+func displayNext(viewModel: Feed.Next.ViewModel) {
+  self.displayNextViewModel = viewModel
+}
+
+`
 
 	node := model.Node{
 		Type: model.Title,

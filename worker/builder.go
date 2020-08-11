@@ -101,19 +101,19 @@ func (b *Builder) getTemplate(objType ObjectType) (string, error) {
 	switch objType {
 	case Presenter:
 		return `var present<usecase>Called: Int = 0
-	var present<usecase><behavior>: <title>.<usecase>.<behavior>?
-	func present<usecase>(res: <title>.<usecase>.<behavior>) {
-	  self.present<usecase>Called += 1
-	  self.present<usecase><behavior> = res
-	}
-		
-	`, nil
+var present<usecase><behavior>: <title>.<usecase>.<behavior>?
+func present<usecase>(res: <title>.<usecase>.<behavior>) {
+  self.present<usecase>Called += 1
+  self.present<usecase><behavior> = res
+}
+
+`, nil
 
 	case Displayer:
 		return `var display<usecase><behavior>: <title>.<usecase>.<behavior>?
-  func display<usecase>(viewModel: <title>.<usecase>.<behavior>) {
-    self.display<usecase><behavior> = viewModel
-  }
+func display<usecase>(viewModel: <title>.<usecase>.<behavior>) {
+  self.display<usecase><behavior> = viewModel
+}
 
 `, nil
 
