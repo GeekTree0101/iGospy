@@ -11,71 +11,27 @@ import (
 func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var presentReloadCalled: Int = 0
-var presentReloadRes: Feed.Reload.Res?
-func presentReload(res: Feed.Reload.Res) {
+var presentReloadResponse: Feed.Reload.Response?
+func presentReload(res: Feed.Reload.Response) {
   self.presentReloadCalled += 1
-  self.presentReloadRes = res
+  self.presentReloadResponse = res
 }
 
 var presentNextCalled: Int = 0
-var presentNextRes: Feed.Next.Res?
-func presentNext(res: Feed.Next.Res) {
+var presentNextResponse: Feed.Next.Response?
+func presentNext(res: Feed.Next.Response) {
   self.presentNextCalled += 1
-  self.presentNextRes = res
+  self.presentNextResponse = res
 }
 
 `
 
-	node := model.Node{
-		Type: model.Title,
-		Name: "Feed",
-		Children: []model.Node{
-			model.Node{
-				Type: model.Context,
-				Name: "Reload",
-				Children: []model.Node{
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Req",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Res",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "ViewModel",
-						Children: nil,
-					},
-				},
-			},
-			model.Node{
-				Type: model.Context,
-				Name: "Next",
-				Children: []model.Node{
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Req",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Res",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "ViewModel",
-						Children: nil,
-					},
-				},
-			},
-		},
+	usecase := model.Usecase{
+		Title:    "Feed",
+		Contexts: []string{"Reload", "Next"},
 	}
 
-	b := worker.NewBuilder(node)
+	b := worker.NewBuilder(usecase)
 
 	// when
 	out, err := b.GetPresenter()
@@ -105,56 +61,12 @@ func displayNext(viewModel: Feed.Next.ViewModel) {
 
 `
 
-	node := model.Node{
-		Type: model.Title,
-		Name: "Feed",
-		Children: []model.Node{
-			model.Node{
-				Type: model.Context,
-				Name: "Reload",
-				Children: []model.Node{
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Req",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Res",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "ViewModel",
-						Children: nil,
-					},
-				},
-			},
-			model.Node{
-				Type: model.Context,
-				Name: "Next",
-				Children: []model.Node{
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Req",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "Res",
-						Children: nil,
-					},
-					model.Node{
-						Type:     model.Behavior,
-						Name:     "ViewModel",
-						Children: nil,
-					},
-				},
-			},
-		},
+	usecase := model.Usecase{
+		Title:    "Feed",
+		Contexts: []string{"Reload", "Next"},
 	}
 
-	b := worker.NewBuilder(node)
+	b := worker.NewBuilder(usecase)
 
 	// when
 	out, err := b.GetDisplayer()

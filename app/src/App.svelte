@@ -4,11 +4,11 @@ enum Feed {
 
   enum Reload {
 
-	enum Req {
+	enum Request {
 
 	}
 
-	enum Res {
+	enum Response {
 
 		var cards: [Card]
 		var error: Error?
@@ -22,11 +22,11 @@ enum Feed {
 
   enum Next {
 
-	enum Req {
+	enum Request {
 
 	}
 
-	struct Res {
+	struct Response {
 
 		var cards: [Card]
 		var error: Error?
@@ -47,6 +47,10 @@ enum Feed {
 	async function didTapMake() {
 		const res = await fetch('http://localhost:7777/make', {
 			method: 'POST',
+			headers: {
+    			'Accept': 'application/json',
+    			'Content-Type': 'application/json'
+  			},
 			body: JSON.stringify({
 				usecase
 			})

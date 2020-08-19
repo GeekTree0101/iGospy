@@ -3,12 +3,10 @@ package worker_test
 import (
 	"testing"
 
-	"github.com/GeekTree0101/iGospy/model"
-
 	"github.com/GeekTree0101/iGospy/worker"
 )
 
-func Test_Processing_Valid_And_Simple_Usecase(t *testing.T) {
+func Test_Make_Usecase_With_Valid_And_Simple_Raw_Usecase(t *testing.T) {
 	// given
 	var rawstr string = `
 	enum Feed {
@@ -55,7 +53,7 @@ func Test_Processing_Valid_And_Simple_Usecase(t *testing.T) {
 	parser := worker.NewParser()
 
 	// when
-	result, err := parser.Processing(rawstr)
+	result, err := parser.MakeUsecase(rawstr)
 
 	// then
 	if err != nil {
@@ -63,101 +61,28 @@ func Test_Processing_Valid_And_Simple_Usecase(t *testing.T) {
 		return
 	}
 
-	// title
-
-	if result.Type != model.Title {
-		t.Errorf("root is not Title")
+	if result.Title != "Feed" {
+		t.Errorf("invalid title")
 		return
 	}
 
-	if len(result.Children) != 2 {
-		t.Errorf("children count doesn't 2, %d", len(result.Children))
+	if len(result.Contexts) != 2 {
+		t.Errorf("invalid contexts length")
 		return
 	}
 
-	// context
-
-	if result.Children[0].Type != model.Context {
-		t.Errorf("%s type doesn't Context", result.Children[0].Name)
+	if result.Contexts[0] != "Reload" {
+		t.Errorf("invalid first context")
 		return
 	}
 
-	if result.Children[1].Type != model.Context {
-		t.Errorf("%s type doesn't Context", result.Children[1].Name)
-		return
-	}
-
-	if len(result.Children[0].Children) != 3 {
-		t.Errorf("children count doesn't 3, %d", len(result.Children[0].Children))
-		return
-	}
-
-	// first context
-
-	if result.Children[0].Children[0].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[0].Name)
-		return
-	}
-
-	if result.Children[0].Children[1].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[1].Name)
-		return
-	}
-
-	if result.Children[0].Children[2].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[2].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[0].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[0].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[1].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[1].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[2].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[2].Name)
-		return
-	}
-
-	// second context
-
-	if result.Children[1].Children[0].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[0].Name)
-		return
-	}
-
-	if result.Children[1].Children[1].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[1].Name)
-		return
-	}
-
-	if result.Children[1].Children[2].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[2].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[0].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[0].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[1].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[1].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[2].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[2].Name)
+	if result.Contexts[1] != "Next" {
+		t.Errorf("invalid second context")
 		return
 	}
 }
 
-func Test_Processing_Valid_And_Complicated_Usecase(t *testing.T) {
+func Test_Make_Usecase_With_Valid_And_Complicated_Raw_Usecase(t *testing.T) {
 	// given
 	var rawstr string = `
 	enum Feed {
@@ -204,7 +129,7 @@ func Test_Processing_Valid_And_Complicated_Usecase(t *testing.T) {
 	parser := worker.NewParser()
 
 	// when
-	result, err := parser.Processing(rawstr)
+	result, err := parser.MakeUsecase(rawstr)
 
 	// then
 	if err != nil {
@@ -212,96 +137,58 @@ func Test_Processing_Valid_And_Complicated_Usecase(t *testing.T) {
 		return
 	}
 
-	// title
-
-	if result.Type != model.Title {
-		t.Errorf("root is not Title")
+	if result.Title != "Feed" {
+		t.Errorf("invalid title")
 		return
 	}
 
-	if len(result.Children) != 2 {
-		t.Errorf("children count doesn't 2, %d", len(result.Children))
+	if len(result.Contexts) != 2 {
+		t.Errorf("invalid contexts length")
 		return
 	}
 
-	// context
-
-	if result.Children[0].Type != model.Context {
-		t.Errorf("%s type doesn't Context", result.Children[0].Name)
+	if result.Contexts[0] != "Reload" {
+		t.Errorf("invalid first context")
 		return
 	}
 
-	if result.Children[1].Type != model.Context {
-		t.Errorf("%s type doesn't Context", result.Children[1].Name)
+	if result.Contexts[1] != "Next" {
+		t.Errorf("invalid second context")
+		return
+	}
+}
+
+func Test_Make_Usecase_With_RealData(t *testing.T) {
+	rawstr := "	enum Feed {↵↵		enum Reload {↵↵			enum Req {↵↵			}↵↵			enum Res {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			enum ViewModel {↵↵				var error: Error?↵			}↵		}↵↵		enum Next {↵↵			enum Req {↵↵			}↵↵			struct Res {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			struct ViewModel {↵↵				var changeSet: [Change<CardViewModel>]↵				var error: Error?↵			}↵		}↵	}"
+
+	parser := worker.NewParser()
+
+	// when
+	result, err := parser.MakeUsecase(rawstr)
+
+	// then
+	if err != nil {
+		t.Error(err)
 		return
 	}
 
-	if len(result.Children[0].Children) != 3 {
-		t.Errorf("children count doesn't 3, %d", len(result.Children[0].Children))
+	if result.Title != "Feed" {
+		t.Errorf("invalid title")
 		return
 	}
 
-	// first context
-
-	if result.Children[0].Children[0].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[0].Name)
+	if len(result.Contexts) != 2 {
+		t.Errorf("invalid contexts length")
 		return
 	}
 
-	if result.Children[0].Children[1].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[1].Name)
+	if result.Contexts[0] != "Reload" {
+		t.Errorf("invalid first context")
 		return
 	}
 
-	if result.Children[0].Children[2].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[0].Children[2].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[0].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[0].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[1].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[1].Name)
-		return
-	}
-
-	if len(result.Children[0].Children[2].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[0].Children[2].Name)
-		return
-	}
-
-	// second context
-
-	if result.Children[1].Children[0].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[0].Name)
-		return
-	}
-
-	if result.Children[1].Children[1].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[1].Name)
-		return
-	}
-
-	if result.Children[1].Children[2].Type != model.Behavior {
-		t.Errorf("%s type doesn't Behavior", result.Children[1].Children[2].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[0].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[0].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[1].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[1].Name)
-		return
-	}
-
-	if len(result.Children[1].Children[2].Children) != 0 {
-		t.Errorf("%s children should be zero", result.Children[1].Children[2].Name)
+	if result.Contexts[1] != "Next" {
+		t.Errorf("invalid second context")
 		return
 	}
 }

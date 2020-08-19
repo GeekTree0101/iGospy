@@ -31,13 +31,13 @@ func (be *BuilderError) Error() string {
 
 // Builder is spy object generator
 type Builder struct {
-	node model.Node
+	usecase model.Usecase
 }
 
 // NewBuilder is builder constructor
-func NewBuilder(node model.Node) Builder {
+func NewBuilder(usecase model.Usecase) Builder {
 	return Builder{
-		node: node,
+		usecase: usecase,
 	}
 }
 
@@ -55,25 +55,9 @@ func (b *Builder) getSpyObject(objType ObjectType) (string, error) {
 
 	var out string
 
-	title := b.node.Name
+	title := b.usecase.Title
 
-	for _, us := range b.node.Children {
-
-		if us.Type != model.Context {
-			return "", &BuilderError{
-				desc: "invalid structure",
-			}
-		}
-
-		usecase := us.Name
-
-		if len(us.Children) < 3 {
-			return "", &BuilderError{
-				desc: "invalid structure",
-			}
-		}
-
-		behaivor := us.Children[objType].Name
+	for _, ctx := range b.usecase.Contexts {
 
 		temp, err := b.getTemplate(objType)
 
@@ -82,8 +66,7 @@ func (b *Builder) getSpyObject(objType ObjectType) (string, error) {
 		}
 
 		temp = strings.ReplaceAll(temp, "<title>", title)
-		temp = strings.ReplaceAll(temp, "<usecase>", usecase)
-		temp = strings.ReplaceAll(temp, "<behavior>", behaivor)
+		temp = strings.ReplaceAll(temp, "<usecase>", ctx)
 
 		out += temp
 	}
@@ -101,18 +84,18 @@ func (b *Builder) getTemplate(objType ObjectType) (string, error) {
 	switch objType {
 	case Presenter:
 		return `var present<usecase>Called: Int = 0
-var present<usecase><behavior>: <title>.<usecase>.<behavior>?
-func present<usecase>(res: <title>.<usecase>.<behavior>) {
+var present<usecase>Response: <title>.<usecase>.Response?
+func present<usecase>(res: <title>.<usecase>.Response) {
   self.present<usecase>Called += 1
-  self.present<usecase><behavior> = res
+  self.present<usecase>Response = res
 }
 
 `, nil
 
 	case Displayer:
-		return `var display<usecase><behavior>: <title>.<usecase>.<behavior>?
-func display<usecase>(viewModel: <title>.<usecase>.<behavior>) {
-  self.display<usecase><behavior> = viewModel
+		return `var display<usecase>ViewModel: <title>.<usecase>.ViewModel?
+func display<usecase>(viewModel: <title>.<usecase>.ViewModel) {
+  self.display<usecase>ViewModel = viewModel
 }
 
 `, nil

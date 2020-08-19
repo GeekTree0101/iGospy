@@ -27,15 +27,23 @@ func (m *Make) GetIndexPage(c echo.Context) error {
 
 // PostMake return generated spy object
 func (m *Make) PostMake(c echo.Context) error {
-	usecase := c.FormValue("usecase")
-	parser := worker.NewParser()
-	node, err := parser.Processing(usecase)
+
+	req := new(model.MakeRequest)
+
+	err := c.Bind(req)
 
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	builder := worker.NewBuilder(node)
+	parser := worker.NewParser()
+	usecase, err := parser.MakeUsecase(req.Usecase)
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
+	builder := worker.NewBuilder(usecase)
 
 	presenter, err := builder.GetPresenter()
 

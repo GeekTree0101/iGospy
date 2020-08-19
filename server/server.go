@@ -10,6 +10,7 @@ import (
 	"github.com/GeekTree0101/iGospy/api"
 	"github.com/GeekTree0101/iGospy/util"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 // Server is server object
@@ -36,6 +37,9 @@ func (s *Server) Mount() {
 	s.serv.File("/global.css", "app/public/global.css")
 	s.serv.File("/build/bundle.css", "app/public/build/bundle.css")
 	s.serv.File("/build/bundle.js", "app/public/build/bundle.js")
+	s.serv.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
 }
 
 // Route is server route configuration

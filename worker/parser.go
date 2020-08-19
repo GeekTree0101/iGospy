@@ -26,18 +26,17 @@ func NewParser() Parser {
 	return Parser{}
 }
 
-// Processing make a node-trees
-func (p *Parser) Processing(str string) (model.Node, error) {
+// MakeUsecase build usecase with rawString
+func (p *Parser) MakeUsecase(str string) (model.Usecase, error) {
 
+	var usecase model.Usecase
+	var title string = ""
+	var contexts []string
 	var syntex string = ""
 	var syntexQueue []string
-	var root model.Node
-	var children []model.Node
 	var currentDepth int = 0
 
-	// FIXME: processing needs depth inference logic
-
-	for _, r := range strings.TrimSpace(str) {
+	for _, r := range str {
 
 		char := string(r)
 
@@ -50,7 +49,7 @@ func (p *Parser) Processing(str string) (model.Node, error) {
 
 		case "}":
 			if len(syntexQueue) == 0 {
-				return root, &ParserError{
+				return usecase, &ParserError{
 					desc: "queue is empty",
 				}
 			}
@@ -58,60 +57,49 @@ func (p *Parser) Processing(str string) (model.Node, error) {
 			lastSyntex := syntexQueue[len(syntexQueue)-1]
 			splitSyntex := strings.Split(lastSyntex, " ")
 
-			if len(splitSyntex) != 2 {
-				return root, &ParserError{
-					desc: "invalid syntex structure",
+			if len(splitSyntex) == 2 {
+
+				name := splitSyntex[len(splitSyntex)-1]
+
+				switch currentDepth {
+				case 1:
+					title = name
+
+				case 2:
+					contexts = append(contexts, name)
+
+				default:
+					break
 				}
-			}
-
-			name := splitSyntex[len(splitSyntex)-1]
-
-			switch currentDepth {
-			case 1:
-				root = model.Node{
-					Type:     model.Title,
-					Name:     name,
-					Children: children,
-				}
-
-			case 2:
-				var bros []model.Node
-				var child []model.Node
-
-				for _, c := range children {
-					if c.Type == model.Behavior {
-						child = append(child, c)
-					} else {
-						bros = append(bros, c)
-					}
-				}
-
-				children = append(bros, model.Node{
-					Type:     model.Context,
-					Name:     name,
-					Children: child,
-				})
-
-			case 3:
-				children = append(children, model.Node{
-					Type:     model.Behavior,
-					Name:     name,
-					Children: nil,
-				})
-
-			default:
-				break
 			}
 
 			syntexQueue = syntexQueue[:len(syntexQueue)-1]
 			currentDepth--
 
 		default:
-			if currentDepth < 3 && char != "\n" {
-				syntex += char
+			switch char {
+			case "\n":
+				break
+			case "\t":
+				break
+			default:
+				if currentDepth < 2 {
+					syntex += char
+				}
 			}
 		}
 	}
 
-	return root, nil
+	if len(title) != 0 && len(contexts) > 0 {
+		usecase = model.Usecase{
+			Title:    title,
+			Contexts: contexts,
+		}
+
+		return usecase, nil
+	}
+
+	return usecase, &ParserError{
+		desc: "fail to generate usecase " + title + " " + strings.Join(contexts, ","),
+	}
 }
