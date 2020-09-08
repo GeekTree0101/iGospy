@@ -43,18 +43,66 @@ func NewBuilder(usecase model.Usecase) Builder {
 }
 
 // GetInteractor return interactor spy object
-func (b *Builder) GetInteractor() (string, error) {
-	return b.getSpyObject(Interactor)
+func (b *Builder) GetInteractor() (model.BuilderResult, error) {
+
+	ig, err := b.getInterface(Interactor)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	sg, err := b.getSpyObject(Interactor)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	return model.BuilderResult{
+		InterfaceGroup: ig,
+		SpyGroup:       sg,
+	}, nil
 }
 
 // GetPresenter return presenter spy object
-func (b *Builder) GetPresenter() (string, error) {
-	return b.getSpyObject(Presenter)
+func (b *Builder) GetPresenter() (model.BuilderResult, error) {
+
+	ig, err := b.getInterface(Presenter)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	sg, err := b.getSpyObject(Presenter)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	return model.BuilderResult{
+		InterfaceGroup: ig,
+		SpyGroup:       sg,
+	}, nil
 }
 
 // GetDisplayer return displayer spy object
-func (b *Builder) GetDisplayer() (string, error) {
-	return b.getSpyObject(Displayer)
+func (b *Builder) GetDisplayer() (model.BuilderResult, error) {
+
+	ig, err := b.getInterface(Displayer)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	sg, err := b.getSpyObject(Displayer)
+
+	if err != nil {
+		return model.BuilderResult{}, err
+	}
+
+	return model.BuilderResult{
+		InterfaceGroup: ig,
+		SpyGroup:       sg,
+	}, nil
 }
 
 func (b *Builder) getSpyObject(objType ObjectType) (string, error) {
@@ -115,6 +163,52 @@ func display<usecase>(viewModel: <title>.<usecase>.ViewModel) {
 }
 
 `, nil
+
+	default:
+		return "", &BuilderError{
+			desc: "Unsupported object type",
+		}
+	}
+}
+
+func (b *Builder) getInterface(objType ObjectType) (string, error) {
+
+	var out string
+
+	title := b.usecase.Title
+
+	for _, ctx := range b.usecase.Contexts {
+
+		temp, err := b.getInterfaceTemplate(objType)
+
+		if err != nil {
+			return "", err
+		}
+
+		temp = strings.ReplaceAll(temp, "<title>", title)
+		temp = strings.ReplaceAll(temp, "<usecase>", ctx)
+		temp = strings.ReplaceAll(temp, "<lower_capitalize_first_letter_usecase>", b.makeLowerCapitalizeFirstLetter(ctx))
+
+		out += temp + "\n"
+	}
+
+	if len(out) == 0 {
+		return "", &BuilderError{
+			desc: "output is empty",
+		}
+	}
+
+	return out, nil
+}
+
+func (b *Builder) getInterfaceTemplate(objType ObjectType) (string, error) {
+	switch objType {
+	case Interactor:
+		return `func <lower_capitalize_first_letter_usecase>(req: <title>.<usecase>.Request)`, nil
+	case Presenter:
+		return `func present<usecase>(res: <title>.<usecase>.Response)`, nil
+	case Displayer:
+		return `func display<usecase>(viewModel: <title>.<usecase>.ViewModel)`, nil
 
 	default:
 		return "", &BuilderError{

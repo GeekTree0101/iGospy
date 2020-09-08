@@ -67,13 +67,13 @@ enum Feed {
 		displayDisplayer  = result.displayer
 		displayInteractorInterface = result.interactorInterface
 		displayPresenterInterface = result.presenterInterface
-		displayDisplayerInterface = result.displyerInterface
+		displayDisplayerInterface = result.displayerInterface
 	}
 
 </script>
 
 <main>
-	<img width=100%, src="/img/logo.png" alt="iGospy"/>
+	<img width=100%, src="https://github.com/GeekTree0101/iGospy/raw/master/res/logo.png" alt="iGospy"/>
 	<center>
 		<a href="https://www.github.com/Geektree0101">Created by Geektree0101</a>
 	</center>

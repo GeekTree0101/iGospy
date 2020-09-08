@@ -64,9 +64,12 @@ func (m *Make) PostMake(c echo.Context) error {
 	}
 
 	res := model.MakeResponse{
-		Interactor: interactor,
-		Presenter:  presenter,
-		Displayer:  displayer,
+		Interactor:          interactor.SpyGroup,
+		InteractorInterface: interactor.InterfaceGroup,
+		Presenter:           presenter.SpyGroup,
+		PresenterInterface:  presenter.InterfaceGroup,
+		Displayer:           displayer.SpyGroup,
+		DisplayerInterface:  displayer.InterfaceGroup,
 	}
 
 	return c.JSON(http.StatusOK, res)
