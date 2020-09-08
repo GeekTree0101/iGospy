@@ -24,7 +24,7 @@ go build
 
 ### Input usecase
 
-<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide1.png />
+<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide1.png" />
           
 ```swift
 
@@ -74,12 +74,12 @@ Now you just copy the result. \o/
 
 ### Interactor output
           
-<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide2.png />
+<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide2.png" />
    
 ### Presenter output   
 
-<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide3.png />
+<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide3.png" />
           
 ### Display output
          
-<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide4.png />
+<img src="https://github.com/GeekTree0101/iGospy/blob/develop/res/guide4.png" />
