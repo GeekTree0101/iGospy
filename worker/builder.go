@@ -3,6 +3,7 @@ package worker
 import (
 	"fmt"
 	"strings"
+	"unicode"
 
 	"github.com/GeekTree0101/iGospy/model"
 )
@@ -41,6 +42,11 @@ func NewBuilder(usecase model.Usecase) Builder {
 	}
 }
 
+// GetInteractor return interactor spy object
+func (b *Builder) GetInteractor() (string, error) {
+	return b.getSpyObject(Interactor)
+}
+
 // GetPresenter return presenter spy object
 func (b *Builder) GetPresenter() (string, error) {
 	return b.getSpyObject(Presenter)
@@ -67,6 +73,7 @@ func (b *Builder) getSpyObject(objType ObjectType) (string, error) {
 
 		temp = strings.ReplaceAll(temp, "<title>", title)
 		temp = strings.ReplaceAll(temp, "<usecase>", ctx)
+		temp = strings.ReplaceAll(temp, "<lower_capitalize_first_letter_usecase>", b.makeLowerCapitalizeFirstLetter(ctx))
 
 		out += temp
 	}
@@ -82,6 +89,15 @@ func (b *Builder) getSpyObject(objType ObjectType) (string, error) {
 
 func (b *Builder) getTemplate(objType ObjectType) (string, error) {
 	switch objType {
+	case Interactor:
+		return `var <lower_capitalize_first_letter_usecase>Called: Int = 0
+var <lower_capitalize_first_letter_usecase>Req: <title>.<usecase>.Request?
+func <lower_capitalize_first_letter_usecase>(req: <title>.<usecase>.Request) {
+  self.<lower_capitalize_first_letter_usecase>Called += 1
+  self.<lower_capitalize_first_letter_usecase>Req = req
+}
+
+`, nil
 	case Presenter:
 		return `var present<usecase>Called: Int = 0
 var present<usecase>Response: <title>.<usecase>.Response?
@@ -105,4 +121,11 @@ func display<usecase>(viewModel: <title>.<usecase>.ViewModel) {
 			desc: "Unsupported object type",
 		}
 	}
+}
+
+func (b *Builder) makeLowerCapitalizeFirstLetter(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return str
 }

@@ -8,6 +8,45 @@ import (
 	"github.com/GeekTree0101/iGospy/model"
 )
 
+func Test_Build_Interactor_Spy_Object(t *testing.T) {
+	// given
+	expectedOutput := `var reloadCalled: Int = 0
+var reloadReq: Feed.Reload.Request?
+func reload(req: Feed.Reload.Request) {
+  self.reloadCalled += 1
+  self.reloadReq = req
+}
+
+var nextCalled: Int = 0
+var nextReq: Feed.Next.Request?
+func next(req: Feed.Next.Request) {
+  self.nextCalled += 1
+  self.nextReq = req
+}
+
+`
+
+	usecase := model.Usecase{
+		Title:    "Feed",
+		Contexts: []string{"Reload", "Next"},
+	}
+
+	b := worker.NewBuilder(usecase)
+
+	// when
+	out, err := b.GetInteractor()
+
+	// then
+	if err != nil {
+		t.Errorf(err.Error())
+		return
+	}
+
+	if out != expectedOutput {
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
+	}
+}
+
 func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var presentReloadCalled: Int = 0

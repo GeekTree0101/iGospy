@@ -45,6 +45,12 @@ func (m *Make) PostMake(c echo.Context) error {
 
 	builder := worker.NewBuilder(usecase)
 
+	interactor, err := builder.GetInteractor()
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
 	presenter, err := builder.GetPresenter()
 
 	if err != nil {
@@ -58,8 +64,9 @@ func (m *Make) PostMake(c echo.Context) error {
 	}
 
 	res := model.MakeResponse{
-		Presenter: presenter,
-		Displayer: displayer,
+		Interactor: interactor,
+		Presenter:  presenter,
+		Displayer:  displayer,
 	}
 
 	return c.JSON(http.StatusOK, res)
