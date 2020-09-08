@@ -41,6 +41,10 @@ enum Feed {
 }
 `;
 
+	let displayInteractorInterface = "Ready to make interactor"
+	let displayPresenterInterface = "Ready to make presenter";
+	let displayDisplayerInterface = "Ready to make displayer";
+
 	let displayInteractor = "Ready to make interactor"
 	let displayPresenter = "Ready to make presenter";
 	let displayDisplayer = "Ready to make displayer";
@@ -61,28 +65,43 @@ enum Feed {
 		displayInteractor = result.interactor
 		displayPresenter = result.presenter
 		displayDisplayer  = result.displayer
+		displayInteractorInterface = result.interactorInterface
+		displayPresenterInterface = result.presenterInterface
+		displayDisplayerInterface = result.displyerInterface
 	}
 
 </script>
 
 <main>
-	<h1>iGospy!</h1>
+	<img width=100%, src="/img/logo.png" alt="iGospy"/>
+	<center>
+		<a href="https://www.github.com/Geektree0101">Created by Geektree0101</a>
+	</center>
 	<div class="field-container">
 		<div class="field-container">
-			<h2>Input: Usecase Content</h2>
+			<h1>Usecase</h1>
 			<textarea class="before-field" type="text" name="usecase" bind:value={usecase}></textarea>
 		</div>
 		<button class="make-button" on:click={didTapMake}>Generate</button>
 		<div class="field-container">
-			<h2>Output: Interactor</h2>
+			<h1>Interactor</h1>
+			<h5>Interface</h5>
+			<textarea class="after-field" type="text" name="spy" value={displayInteractorInterface} readonly></textarea>
+			<h5>Spy</h5>
 			<textarea class="after-field" type="text" name="spy" value={displayInteractor} readonly></textarea>
 		</div>
 		<div class="field-container">
-			<h2>Output: Presenter</h2>
+			<h1>Presenter</h1>
+			<h5>Interface</h5>
+			<textarea class="after-field" type="text" name="spy" value={displayPresenterInterface} readonly></textarea>
+			<h5>Spy</h5>
 			<textarea class="after-field" type="text" name="spy" value={displayPresenter} readonly></textarea>
 		</div>
 		<div class="field-container">
-			<h2>Output: Display</h2>
+			<h1>Display</h1>
+			<h5>Interface</h5>
+			<textarea class="after-field" type="text" name="spy" value={displayDisplayerInterface} readonly></textarea>
+			<h5>Spy</h5>
 			<textarea class="after-field" type="text" name="spy" value={displayDisplayer} readonly></textarea>
 		</div>
 	</div>
