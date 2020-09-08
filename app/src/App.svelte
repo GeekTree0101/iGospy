@@ -41,6 +41,7 @@ enum Feed {
 }
 `;
 
+	let displayInteractor = "Ready to make interactor"
 	let displayPresenter = "Ready to make presenter";
 	let displayDisplayer = "Ready to make displayer";
 
@@ -57,6 +58,7 @@ enum Feed {
 		})
 		
 		const result = await res.json();
+		displayInteractor = result.interactor
 		displayPresenter = result.presenter
 		displayDisplayer  = result.displayer
 	}
@@ -71,6 +73,10 @@ enum Feed {
 			<textarea class="before-field" type="text" name="usecase" bind:value={usecase}></textarea>
 		</div>
 		<button class="make-button" on:click={didTapMake}>Generate</button>
+		<div class="field-container">
+			<h2>Output: Interactor</h2>
+			<textarea class="after-field" type="text" name="spy" value={displayInteractor} readonly></textarea>
+		</div>
 		<div class="field-container">
 			<h2>Output: Presenter</h2>
 			<textarea class="after-field" type="text" name="spy" value={displayPresenter} readonly></textarea>
