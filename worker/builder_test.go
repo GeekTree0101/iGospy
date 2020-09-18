@@ -11,17 +11,17 @@ import (
 func Test_Build_Interactor_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var reloadCalled: Int = 0
-var reloadReq: Feed.Reload.Request?
-func reload(req: Feed.Reload.Request) {
+var reloadRequest: Feed.Reload.Request?
+func reload(request: Feed.Reload.Request) {
   self.reloadCalled += 1
-  self.reloadReq = req
+  self.reloadRequest = request
 }
 
 var nextCalled: Int = 0
-var nextReq: Feed.Next.Request?
-func next(req: Feed.Next.Request) {
+var nextRequest: Feed.Next.Request?
+func next(request: Feed.Next.Request) {
   self.nextCalled += 1
-  self.nextReq = req
+  self.nextRequest = request
 }
 
 `
@@ -51,16 +51,16 @@ func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var presentReloadCalled: Int = 0
 var presentReloadResponse: Feed.Reload.Response?
-func presentReload(res: Feed.Reload.Response) {
+func presentReload(response: Feed.Reload.Response) {
   self.presentReloadCalled += 1
-  self.presentReloadResponse = res
+  self.presentReloadResponse = response
 }
 
 var presentNextCalled: Int = 0
 var presentNextResponse: Feed.Next.Response?
-func presentNext(res: Feed.Next.Response) {
+func presentNext(response: Feed.Next.Response) {
   self.presentNextCalled += 1
-  self.presentNextResponse = res
+  self.presentNextResponse = response
 }
 
 `
