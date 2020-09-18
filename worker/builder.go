@@ -140,6 +140,7 @@ func (b *Builder) getTemplate(objType ObjectType) (string, error) {
 	case Interactor:
 		return `var <lower_capitalize_first_letter_usecase>Called: Int = 0
 var <lower_capitalize_first_letter_usecase>Request: <title>.<usecase>.Request?
+
 func <lower_capitalize_first_letter_usecase>(request: <title>.<usecase>.Request) {
   self.<lower_capitalize_first_letter_usecase>Called += 1
   self.<lower_capitalize_first_letter_usecase>Request = request
@@ -149,6 +150,7 @@ func <lower_capitalize_first_letter_usecase>(request: <title>.<usecase>.Request)
 	case Presenter:
 		return `var present<usecase>Called: Int = 0
 var present<usecase>Response: <title>.<usecase>.Response?
+
 func present<usecase>(response: <title>.<usecase>.Response) {
   self.present<usecase>Called += 1
   self.present<usecase>Response = response
@@ -158,6 +160,7 @@ func present<usecase>(response: <title>.<usecase>.Response) {
 
 	case Displayer:
 		return `var display<usecase>ViewModel: <title>.<usecase>.ViewModel?
+		
 func display<usecase>(viewModel: <title>.<usecase>.ViewModel) {
   self.display<usecase>ViewModel = viewModel
 }

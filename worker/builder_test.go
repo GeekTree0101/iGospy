@@ -12,6 +12,7 @@ func Test_Build_Interactor_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var reloadCalled: Int = 0
 var reloadRequest: Feed.Reload.Request?
+
 func reload(request: Feed.Reload.Request) {
   self.reloadCalled += 1
   self.reloadRequest = request
@@ -19,6 +20,7 @@ func reload(request: Feed.Reload.Request) {
 
 var nextCalled: Int = 0
 var nextRequest: Feed.Next.Request?
+
 func next(request: Feed.Next.Request) {
   self.nextCalled += 1
   self.nextRequest = request
@@ -51,6 +53,7 @@ func Test_Build_Presenter_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var presentReloadCalled: Int = 0
 var presentReloadResponse: Feed.Reload.Response?
+
 func presentReload(response: Feed.Reload.Response) {
   self.presentReloadCalled += 1
   self.presentReloadResponse = response
@@ -58,6 +61,7 @@ func presentReload(response: Feed.Reload.Response) {
 
 var presentNextCalled: Int = 0
 var presentNextResponse: Feed.Next.Response?
+
 func presentNext(response: Feed.Next.Response) {
   self.presentNextCalled += 1
   self.presentNextResponse = response
@@ -89,11 +93,13 @@ func presentNext(response: Feed.Next.Response) {
 func Test_Build_Displayer_Spy_Object(t *testing.T) {
 	// given
 	expectedOutput := `var displayReloadViewModel: Feed.Reload.ViewModel?
+
 func displayReload(viewModel: Feed.Reload.ViewModel) {
   self.displayReloadViewModel = viewModel
 }
 
 var displayNextViewModel: Feed.Next.ViewModel?
+
 func displayNext(viewModel: Feed.Next.ViewModel) {
   self.displayNextViewModel = viewModel
 }
