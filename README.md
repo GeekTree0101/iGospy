@@ -15,6 +15,7 @@ Clean Swift spy generator built on Go
 ```sh
 // FIXME
 cd app
+npm install
 npm run build
 cd ../
 go build
