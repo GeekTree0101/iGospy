@@ -13,11 +13,11 @@ func Test_Make_Usecase_With_Valid_And_Simple_Raw_Usecase(t *testing.T) {
 
 		enum Reload {
 
-			enum Req {
+			enum Request {
 
 			}
 
-			enum Res {
+			enum Response {
 
 				var cards: [Card]
 				var error: Error?
@@ -31,11 +31,11 @@ func Test_Make_Usecase_With_Valid_And_Simple_Raw_Usecase(t *testing.T) {
 
 		enum Next {
 
-			enum Req {
+			enum Request {
 
 			}
 
-			struct Res {
+			struct Response {
 
 				var cards: [Card]
 				var error: Error?
@@ -89,11 +89,11 @@ func Test_Make_Usecase_With_Valid_And_Complicated_Raw_Usecase(t *testing.T) {
 
 		enum Reload {
 
-			enum Req {
+			enum Request {
 
 			}
 
-			enum Res {
+			enum Response {
 
 				var cards: [Card]
 				var error: Error?
@@ -107,11 +107,11 @@ func Test_Make_Usecase_With_Valid_And_Complicated_Raw_Usecase(t *testing.T) {
 
 		enum Next {
 
-			enum Req {
+			enum Request {
 
 			}
 
-			struct Res {
+			struct Response {
 
 				var cards: [Card]
 				var error: Error?
@@ -159,7 +159,7 @@ func Test_Make_Usecase_With_Valid_And_Complicated_Raw_Usecase(t *testing.T) {
 }
 
 func Test_Make_Usecase_With_RealData(t *testing.T) {
-	rawstr := "	enum Feed {↵↵		enum Reload {↵↵			enum Req {↵↵			}↵↵			enum Res {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			enum ViewModel {↵↵				var error: Error?↵			}↵		}↵↵		enum Next {↵↵			enum Req {↵↵			}↵↵			struct Res {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			struct ViewModel {↵↵				var changeSet: [Change<CardViewModel>]↵				var error: Error?↵			}↵		}↵	}"
+	rawstr := "	enum Feed {↵↵		enum Reload {↵↵			enum Request {↵↵			}↵↵			enum Response {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			enum ViewModel {↵↵				var error: Error?↵			}↵		}↵↵		enum Next {↵↵			enum Request {↵↵			}↵↵			struct Response {↵↵				var cards: [Card]↵				var error: Error?↵			}↵↵			struct ViewModel {↵↵				var changeSet: [Change<CardViewModel>]↵				var error: Error?↵			}↵		}↵	}"
 
 	parser := worker.NewParser()
 

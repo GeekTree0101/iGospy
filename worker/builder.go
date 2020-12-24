@@ -139,25 +139,28 @@ func (b *Builder) getTemplate(objType ObjectType) (string, error) {
 	switch objType {
 	case Interactor:
 		return `var <lower_capitalize_first_letter_usecase>Called: Int = 0
-var <lower_capitalize_first_letter_usecase>Req: <title>.<usecase>.Request?
-func <lower_capitalize_first_letter_usecase>(req: <title>.<usecase>.Request) {
+var <lower_capitalize_first_letter_usecase>Request: <title>.<usecase>.Request?
+
+func <lower_capitalize_first_letter_usecase>(request: <title>.<usecase>.Request) {
   self.<lower_capitalize_first_letter_usecase>Called += 1
-  self.<lower_capitalize_first_letter_usecase>Req = req
+  self.<lower_capitalize_first_letter_usecase>Request = request
 }
 
 `, nil
 	case Presenter:
 		return `var present<usecase>Called: Int = 0
 var present<usecase>Response: <title>.<usecase>.Response?
-func present<usecase>(res: <title>.<usecase>.Response) {
+
+func present<usecase>(response: <title>.<usecase>.Response) {
   self.present<usecase>Called += 1
-  self.present<usecase>Response = res
+  self.present<usecase>Response = response
 }
 
 `, nil
 
 	case Displayer:
 		return `var display<usecase>ViewModel: <title>.<usecase>.ViewModel?
+		
 func display<usecase>(viewModel: <title>.<usecase>.ViewModel) {
   self.display<usecase>ViewModel = viewModel
 }
@@ -204,9 +207,9 @@ func (b *Builder) getInterface(objType ObjectType) (string, error) {
 func (b *Builder) getInterfaceTemplate(objType ObjectType) (string, error) {
 	switch objType {
 	case Interactor:
-		return `func <lower_capitalize_first_letter_usecase>(req: <title>.<usecase>.Request)`, nil
+		return `func <lower_capitalize_first_letter_usecase>(request: <title>.<usecase>.Request)`, nil
 	case Presenter:
-		return `func present<usecase>(res: <title>.<usecase>.Response)`, nil
+		return `func present<usecase>(response: <title>.<usecase>.Response)`, nil
 	case Displayer:
 		return `func display<usecase>(viewModel: <title>.<usecase>.ViewModel)`, nil
 
