@@ -3,9 +3,9 @@ package api
 import (
 	"net/http"
 
-	"github.com/GeekTree0101/iSpygo/model"
+	"github.com/GeekTree0101/iGospy/model"
 
-	"github.com/GeekTree0101/iSpygo/worker"
+	"github.com/GeekTree0101/iGospy/worker"
 
 	"github.com/labstack/echo/v4"
 )
@@ -27,15 +27,29 @@ func (m *Make) GetIndexPage(c echo.Context) error {
 
 // PostMake return generated spy object
 func (m *Make) PostMake(c echo.Context) error {
-	usecase := c.FormValue("usecase")
-	parser := worker.NewParser()
-	nodes, err := parser.Processing(usecase)
+
+	req := new(model.MakeRequest)
+
+	err := c.Bind(req)
 
 	if err != nil {
 		return c.String(http.StatusInternalServerError, err.Error())
 	}
 
-	builder := worker.NewBuilder(nodes)
+	parser := worker.NewParser()
+	usecase, err := parser.MakeUsecase(req.Usecase)
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
+
+	builder := worker.NewBuilder(usecase)
+
+	interactor, err := builder.GetInteractor()
+
+	if err != nil {
+		return c.String(http.StatusInternalServerError, err.Error())
+	}
 
 	presenter, err := builder.GetPresenter()
 
@@ -50,8 +64,12 @@ func (m *Make) PostMake(c echo.Context) error {
 	}
 
 	res := model.MakeResponse{
-		Presenter: presenter,
-		Displayer: displayer,
+		Interactor:          interactor.SpyGroup,
+		InteractorInterface: interactor.InterfaceGroup,
+		Presenter:           presenter.SpyGroup,
+		PresenterInterface:  presenter.InterfaceGroup,
+		Displayer:           displayer.SpyGroup,
+		DisplayerInterface:  displayer.InterfaceGroup,
 	}
 
 	return c.JSON(http.StatusOK, res)

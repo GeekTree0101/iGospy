@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/GeekTree0101/iSpygo/server"
+	"github.com/GeekTree0101/iGospy/server"
 	"github.com/spf13/cobra"
 )
 

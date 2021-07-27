@@ -7,9 +7,10 @@ import (
 	"runtime"
 	"text/template"
 
-	"github.com/GeekTree0101/iSpygo/api"
-	"github.com/GeekTree0101/iSpygo/util"
+	"github.com/GeekTree0101/iGospy/api"
+	"github.com/GeekTree0101/iGospy/util"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 // Server is server object
@@ -36,6 +37,9 @@ func (s *Server) Mount() {
 	s.serv.File("/global.css", "app/public/global.css")
 	s.serv.File("/build/bundle.css", "app/public/build/bundle.css")
 	s.serv.File("/build/bundle.js", "app/public/build/bundle.js")
+	s.serv.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
 }
 
 // Route is server route configuration
@@ -50,17 +54,15 @@ func (s *Server) Route() {
 // Run is execute server
 func (s *Server) Run() {
 
-	s.serv.Logger.Fatal(s.serv.Start(":" + s.port))
-
 	var err error
 
 	switch runtime.GOOS {
 	case "linux":
-		err = exec.Command("xdg-open", "https://localhost:"+s.port).Start()
+		err = exec.Command("xdg-open", "http://localhost:"+s.port).Start()
 	case "windows":
-		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", "https://localhost:"+s.port).Start()
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", "http://localhost:"+s.port).Start()
 	case "darwin":
-		err = exec.Command("open", "https://localhost:"+s.port).Start()
+		err = exec.Command("open", "http://localhost:"+s.port).Start()
 	default:
 		err = fmt.Errorf("unsupported platform")
 	}
@@ -68,4 +70,6 @@ func (s *Server) Run() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	s.serv.Logger.Fatal(s.serv.Start(":" + s.port))
 }
