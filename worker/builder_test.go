@@ -44,8 +44,8 @@ func next(request: Feed.Next.Request) {
 		return
 	}
 
-	if out != expectedOutput {
-		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
+	if out.SpyGroup != expectedOutput {
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out.SpyGroup, expectedOutput)
 	}
 }
 
@@ -85,8 +85,8 @@ func presentNext(response: Feed.Next.Response) {
 		return
 	}
 
-	if out != expectedOutput {
-		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
+	if out.SpyGroup != expectedOutput {
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out.SpyGroup, expectedOutput)
 	}
 }
 
@@ -122,7 +122,7 @@ func displayNext(viewModel: Feed.Next.ViewModel) {
 		return
 	}
 
-	if out != expectedOutput {
-		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out, expectedOutput)
+	if out.SpyGroup != expectedOutput {
+		t.Errorf("unexpected output\n [output]\n%s\n [expected]\n%s\n", out.SpyGroup, expectedOutput)
 	}
 }
