@@ -1,6 +1,10 @@
-<img src="https://github.com/GeekTree0101/iGospy/blob/master/res/logo.png" />
+### [Clean Swift Scaffold is OPEN!](https://github.com/GeekTree0101/clean-swift-scaffold)
+<img src="https://github.com/GeekTree0101/clean-swift-scaffold/blob/develop/logo.png" />
 
-# iGoSpy [Alpha]
+iGoSpy will no longer be maintained
+
+
+# iGoSpy [DEPRECATED]
 Clean Swift spy generator built on Go
 
 # Support..
